@@ -6,6 +6,10 @@ import { Text } from 'components/text';
 
 import styles from './Article.module.scss';
 
+type ArticleProps = {
+	fontStyle?: string;
+};
+
 export const Article = () => {
 	return (
 		<article className={clsx(styles.article)}>
