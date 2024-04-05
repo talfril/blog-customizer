@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, FormEvent } from 'react';
 import { useOutsideClickClose } from 'components/select/hooks/useOutsideClickClose';
 import { ArrowButton } from 'components/arrow-button';
 import { Button } from 'components/button';
@@ -6,6 +6,7 @@ import { Separator } from 'components/separator';
 import { RadioGroup } from 'components/radio-group';
 import { Select } from 'components/select';
 import { Text } from 'components/text';
+import clsx from 'clsx';
 import {
 	fontFamilyOptions,
 	fontColors,
@@ -13,21 +14,13 @@ import {
 	contentWidthArr,
 	fontSizeOptions,
 	defaultArticleState,
-	defaultState,
+	ArticleStateType,
 } from '../../constants/articleProps';
 import styles from './ArticleParamsForm.module.scss';
 
-export interface ArticleState {
-	'--font-family': string;
-	'--font-size': string;
-	'--font-color': string;
-	'--container-width': string;
-	'--bg-color': string;
-}
-
 export interface ArticleParamsFormProps {
-	articleState: ArticleState;
-	updateArticleState: (newState: ArticleState) => void;
+	articleState: ArticleStateType;
+	updateArticleState: (newState: ArticleStateType) => void;
 }
 
 export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
@@ -56,16 +49,14 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 		setIsAsideOpen(!isAsideOpen);
 	};
 
-	const handleButtonSubmitClick = (
-		evt: React.MouseEvent<HTMLButtonElement>
-	) => {
-		evt.preventDefault();
-		const newArticleState: ArticleState = {
-			'--font-family': selectedOptions.fontFamily.value,
-			'--font-size': selectedOptions.fontSize.value,
-			'--font-color': selectedOptions.fontColor.value,
-			'--bg-color': selectedOptions.backgroundColor.value,
-			'--container-width': selectedOptions.contentWidth.value,
+	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
+		const newArticleState: ArticleStateType = {
+			fontFamilyOption: selectedOptions.fontFamily,
+			fontSizeOption: selectedOptions.fontSize,
+			fontColor: selectedOptions.fontColor,
+			backgroundColor: selectedOptions.backgroundColor,
+			contentWidth: selectedOptions.contentWidth,
 		};
 		updateArticleState(newArticleState);
 	};
@@ -78,7 +69,7 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 			backgroundColor: defaultArticleState.backgroundColor,
 			contentWidth: defaultArticleState.contentWidth,
 		});
-		updateArticleState(defaultState);
+		updateArticleState(defaultArticleState);
 	};
 
 	return (
@@ -86,10 +77,11 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 			<ArrowButton onClick={handleArrowButtonClick} isOpen={isAsideOpen} />
 			<aside
 				ref={articleRef}
-				className={`${styles.container} ${
-					isAsideOpen ? styles.container_open : ''
-				}`}>
-				<form className={styles.form}>
+				className={clsx(
+					styles.container,
+					isAsideOpen && styles.container_open
+				)}>
+				<form className={styles.form} onSubmit={handleSubmit}>
 					<Text as='h2' size={31} weight={800} uppercase dynamicLite>
 						задайте параметры
 					</Text>
@@ -145,11 +137,7 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 							type='reset'
 							onClick={handleButtonResetClick}
 						/>
-						<Button
-							title='Применить'
-							type='submit'
-							onClick={handleButtonSubmitClick}
-						/>
+						<Button title='Применить' type='submit' />
 					</div>
 				</form>
 			</aside>

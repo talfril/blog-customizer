@@ -177,11 +177,3 @@ export const defaultArticleState = {
 };
 
 export type ArticleStateType = typeof defaultArticleState;
-
-export const defaultState = {
-	'--font-family': defaultArticleState.fontFamilyOption.value,
-	'--font-size': defaultArticleState.fontSizeOption.value,
-	'--font-color': defaultArticleState.fontColor.value,
-	'--container-width': defaultArticleState.contentWidth.value,
-	'--bg-color': defaultArticleState.backgroundColor.value,
-};
