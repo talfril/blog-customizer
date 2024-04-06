@@ -4,13 +4,12 @@ import styles from './ArrowButton.module.scss';
 
 export type OnClick = () => void;
 
-export const ArrowButton = ({
-	onClick,
-	isOpen,
-}: {
+interface ArrowButtonProp {
 	onClick?: () => void;
 	isOpen?: boolean;
-}) => {
+}
+
+export const ArrowButton = ({ onClick, isOpen }: ArrowButtonProp) => {
 	return (
 		<div
 			role='button'

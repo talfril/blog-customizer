@@ -23,14 +23,13 @@ export interface ArticleParamsFormProps {
 	updateArticleState: (newState: ArticleStateType) => void;
 }
 
-export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
+export const ArticleParamsForm = ({
 	articleState,
 	updateArticleState,
-}) => {
+}: ArticleParamsFormProps) => {
 	const [isAsideOpen, setIsAsideOpen] = useState(false);
 
 	const [selectedOptions, setSelectedOptions] = useState(defaultArticleState);
-
 
 	const articleRef = useRef(null);
 
@@ -40,11 +39,7 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 		onChange: setIsAsideOpen,
 	});
 
-	const handleArrowButtonClick = () => {
-		setIsAsideOpen(!isAsideOpen);
-	};
-
-	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (e: FormEvent) => {
 		e.preventDefault();
 		const newArticleState: ArticleStateType = {
 			fontFamilyOption: selectedOptions.fontFamilyOption,
@@ -63,7 +58,10 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 
 	return (
 		<>
-			<ArrowButton onClick={handleArrowButtonClick} isOpen={isAsideOpen} />
+			<ArrowButton
+				onClick={() => setIsAsideOpen(!isAsideOpen)}
+				isOpen={isAsideOpen}
+			/>
 			<aside
 				ref={articleRef}
 				className={clsx(
@@ -80,7 +78,10 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 						options={fontFamilyOptions}
 						title='шрифт'
 						onChange={(option) =>
-							setSelectedOptions({ ...selectedOptions, fontFamilyOption: option })
+							setSelectedOptions({
+								...selectedOptions,
+								fontFamilyOption: option,
+							})
 						}
 					/>
 					<RadioGroup
