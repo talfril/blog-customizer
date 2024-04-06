@@ -29,13 +29,8 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 }) => {
 	const [isAsideOpen, setIsAsideOpen] = useState(false);
 
-	const [selectedOptions, setSelectedOptions] = useState({
-		fontFamily: defaultArticleState.fontFamilyOption,
-		fontSize: defaultArticleState.fontSizeOption,
-		fontColor: defaultArticleState.fontColor,
-		backgroundColor: defaultArticleState.backgroundColor,
-		contentWidth: defaultArticleState.contentWidth,
-	});
+	const [selectedOptions, setSelectedOptions] = useState(defaultArticleState);
+
 
 	const articleRef = useRef(null);
 
@@ -52,8 +47,8 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 	const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		const newArticleState: ArticleStateType = {
-			fontFamilyOption: selectedOptions.fontFamily,
-			fontSizeOption: selectedOptions.fontSize,
+			fontFamilyOption: selectedOptions.fontFamilyOption,
+			fontSizeOption: selectedOptions.fontSizeOption,
 			fontColor: selectedOptions.fontColor,
 			backgroundColor: selectedOptions.backgroundColor,
 			contentWidth: selectedOptions.contentWidth,
@@ -62,13 +57,7 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 	};
 
 	const handleButtonResetClick = () => {
-		setSelectedOptions({
-			fontFamily: defaultArticleState.fontFamilyOption,
-			fontSize: defaultArticleState.fontSizeOption,
-			fontColor: defaultArticleState.fontColor,
-			backgroundColor: defaultArticleState.backgroundColor,
-			contentWidth: defaultArticleState.contentWidth,
-		});
+		setSelectedOptions(defaultArticleState);
 		updateArticleState(defaultArticleState);
 	};
 
@@ -87,20 +76,20 @@ export const ArticleParamsForm: React.FC<ArticleParamsFormProps> = ({
 					</Text>
 
 					<Select
-						selected={selectedOptions.fontFamily}
+						selected={selectedOptions.fontFamilyOption}
 						options={fontFamilyOptions}
 						title='шрифт'
 						onChange={(option) =>
-							setSelectedOptions({ ...selectedOptions, fontFamily: option })
+							setSelectedOptions({ ...selectedOptions, fontFamilyOption: option })
 						}
 					/>
 					<RadioGroup
 						name='fontSizeOptions'
 						options={fontSizeOptions}
-						selected={selectedOptions.fontSize}
+						selected={selectedOptions.fontSizeOption}
 						title='размер шрифта'
 						onChange={(option) =>
-							setSelectedOptions({ ...selectedOptions, fontSize: option })
+							setSelectedOptions({ ...selectedOptions, fontSizeOption: option })
 						}
 					/>
 					<Select
