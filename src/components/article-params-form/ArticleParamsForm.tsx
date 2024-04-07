@@ -19,12 +19,10 @@ import {
 import styles from './ArticleParamsForm.module.scss';
 
 export interface ArticleParamsFormProps {
-	articleState: ArticleStateType;
 	updateArticleState: (newState: ArticleStateType) => void;
 }
 
 export const ArticleParamsForm = ({
-	articleState,
 	updateArticleState,
 }: ArticleParamsFormProps) => {
 	const [isAsideOpen, setIsAsideOpen] = useState(false);
@@ -69,7 +67,7 @@ export const ArticleParamsForm = ({
 					isAsideOpen && styles.container_open
 				)}>
 				<form className={styles.form} onSubmit={handleSubmit}>
-					<Text as='h2' size={31} weight={800} uppercase dynamicLite>
+					<Text as='h2' size={31} weight={800} uppercase>
 						задайте параметры
 					</Text>
 

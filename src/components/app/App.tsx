@@ -25,10 +25,7 @@ export const App = () => {
 					'--bg-color': selectedOptions.backgroundColor.value,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm
-				articleState={selectedOptions}
-				updateArticleState={setSelectedOptions}
-			/>
+			<ArticleParamsForm updateArticleState={setSelectedOptions} />
 			<Article />
 		</div>
 	);
